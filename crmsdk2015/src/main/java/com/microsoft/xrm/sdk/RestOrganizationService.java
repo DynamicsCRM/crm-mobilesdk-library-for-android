@@ -4,11 +4,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.microsoft.xrm.sdk.Client.QueryOptions;
+import com.microsoft.xrm.sdk.Callback;
 
 import java.io.InvalidClassException;
 import java.util.UUID;
 
-import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.mime.TypedString;
 

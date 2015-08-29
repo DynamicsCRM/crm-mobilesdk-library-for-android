@@ -29,13 +29,14 @@ For more information about using early-bound entity types, refer to the related 
 To include this library into your project, you should just take a built *.aar file from the releases section, or from the build folder of this project. You should place that file into your lib folder for you application and include the following into your application's `gradle.build` file:
 
 ```groovy
-compile(name: 'crmsdk2015', ext: 'aar')
+compile(name: 'crmsdk2015', ext: 'aar') {
+    transitive = true;
+}
 ```
 
 Also keep in mind that if you are using Proguard you should add this to your `proguard-rules.pro` file:
 
 ```proguard
--keep class com.microsoft.xrm.sdk.** { *; }
 -keep class * extends com.microsoft.xrm.sdk.Entity { *; }
 ```
 

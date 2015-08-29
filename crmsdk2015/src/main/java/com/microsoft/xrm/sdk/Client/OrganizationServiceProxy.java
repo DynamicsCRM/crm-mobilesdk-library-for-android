@@ -121,7 +121,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
 
             @Override
             public void failure(RetrofitError error) {
-                callback.failure(error);
+                callback.failure(error.getMessage());
             }
         });
     }
@@ -152,7 +152,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
             @Override
             public void failure(RetrofitError error) {
                 if (callback != null) {
-                    callback.failure(error);
+                    callback.failure(error.getMessage());
                 } else {
                     throw error;
                 }
@@ -196,7 +196,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
 
             @Override
             public void failure(RetrofitError error) {
-                callback.failure(error);
+                callback.failure(error.getMessage());
             }
         });
     }
@@ -249,7 +249,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
 
             @Override
             public void failure(RetrofitError error) {
-                callback.failure(error);
+                callback.failure(error.getMessage());
             }
         });
     }
@@ -285,7 +285,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
             @Override
             public void failure(RetrofitError error) {
                 if (callback != null) {
-                    callback.failure(error);
+                    callback.failure(error.getMessage());
                 } else {
                     throw error;
                 }
@@ -324,7 +324,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
             @Override
             public void failure(RetrofitError error) {
                 if (callback != null) {
-                    callback.failure(error);
+                    callback.failure(error.getMessage());
                 } else {
                     throw error;
                 }
@@ -375,7 +375,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
 
             @Override
             public void failure(RetrofitError error) {
-                callback.failure(error);
+                callback.failure(error.getMessage());
             }
         });
     }
@@ -400,7 +400,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
             @Override
             public void failure(RetrofitError error) {
                 if (callback != null) {
-                    callback.failure(error);
+                    callback.failure(error.getMessage());
                 } else {
                     throw error;
                 }

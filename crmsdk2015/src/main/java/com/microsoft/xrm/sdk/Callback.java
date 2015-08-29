@@ -5,6 +5,6 @@ public interface Callback<T> {
 
     void success(T t);
 
-    void failure(RetrofitError error);
+    void failure(String error);
 
 }

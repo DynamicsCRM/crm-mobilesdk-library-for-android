@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
+import com.microsoft.xrm.sdk.Callback;
 import com.microsoft.xrm.sdk.Entity;
 import com.microsoft.xrm.sdk.EntityCollection;
 import com.microsoft.xrm.sdk.RestOrganizationService;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 
-import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -42,7 +42,7 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
                 "Content-Type: application/json;odata=verbose"
         })
         @POST("/XRMServices/2011/OrganizationData.svc/{schemaName}Set")
-        void oDataPost(@Path("schemaName") String schemaName, @Body TypedString body, Callback<?> callback);
+        void oDataPost(@Path("schemaName") String schemaName, @Body TypedString body, retrofit.Callback<?> callback);
 
         @Headers({
                 "Accept: application/json",
@@ -51,7 +51,7 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
         })
         @POST("/XRMServices/2011/OrganizationData.svc/{schemaName}Set(guid'{guid}')")
         void oDataPost(@Path("schemaName") String schemaName, @Path("guid") UUID uid, @Body TypedString body,
-                       Callback<?> callback);
+                       retrofit.Callback<?> callback);
 
         @Headers({
                 "Accept: application/json",
@@ -60,20 +60,20 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
         @POST("/XRMServices/2011/OrganizationData.svc/{schemaName}Set(guid'{guid}')/{relationship}")
         void oDataPost(@Path("schemaName") String schemaName, @Path("guid") UUID uid,
                        @Path("relationship") String relationshipName, @Body TypedString body,
-                       Callback<?> callback);
+                       retrofit.Callback<?> callback);
 
         @Headers({"Accept: application/json"})
         @GET("/XRMServices/2011/OrganizationData.svc/{schemaName}Set(guid'{guid}')/{relationship}")
         void oDataGet(@Path("schemaName") String schemaName, @Path("guid") UUID uid, @Path("relationship") String relationship,
-                      @QueryMap Map<String, String> queries, Callback<?> callback);
+                      @QueryMap Map<String, String> queries, retrofit.Callback<?> callback);
 
         @Headers({"Accept: application/json"})
         @GET("/XRMServices/2011/OrganizationData.svc/{schemaName}Set")
-        void oDataGet(@Path("schemaName") String schemaName, @QueryMap Map<String, String> queries, Callback<?> callback);
+        void oDataGet(@Path("schemaName") String schemaName, @QueryMap Map<String, String> queries, retrofit.Callback<?> callback);
 
         @Headers({"Accept: application/json"})
         @DELETE("/XRMServices/2011/OrganizationData.svc/{schemaName}Set(guid'{guid}')")
-        void oDataDelete(@Path("schemaName") String schemaName, @Path("guid") UUID uid, Callback<?> callback);
+        void oDataDelete(@Path("schemaName") String schemaName, @Path("guid") UUID uid, retrofit.Callback<?> callback);
     }
 
     /**
@@ -111,16 +111,16 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
         String body = gson.toJson(Utils.getSchemaAttributes(entity));
 
         RestEndpoint.oDataPost(entity.getClass().getSimpleName(), new TypedString(body),
-                new Callback<Object>() {
+                new retrofit.Callback<Object>() {
                     @Override
                     public void success(Object o, Response response) {
                         Entity entity = Entity.loadFromJson((LinkedTreeMap) ((LinkedTreeMap) o).get("d"));
-                        callback.success(entity.getId(), response);
+                        callback.success(entity.getId());
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        callback.failure(error);
+                        callback.failure(error.getMessage());
                     }
                 });
     }
@@ -140,16 +140,16 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
             body = gson.toJson(Utils.getSchemaAttributes(entity));
         }
         RestEndpoint.oDataPost(relatedTo.getClass().getSimpleName(), relatedTo.getId(), relationshipName,
-                new TypedString(body), new Callback<Object>() {
+                new TypedString(body), new retrofit.Callback<Object>() {
                     @Override
                     public void success(Object o, Response response) {
                         Entity entity = Entity.loadFromJson((LinkedTreeMap) ((LinkedTreeMap) o).get("d"));
-                        callback.success(entity.getId(), response);
+                        callback.success(entity.getId());
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        callback.failure(error);
+                        callback.failure(error.getMessage());
                     }
                 });
     }
@@ -161,7 +161,7 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
      */
     @Override
     public void Delete(String entitySchemaName, UUID id, @Nullable final Callback<?> callback) {
-        RestEndpoint.oDataDelete(entitySchemaName, id, new Callback<Object>() {
+        RestEndpoint.oDataDelete(entitySchemaName, id, new retrofit.Callback<Object>() {
             @Override
             public void success(Object o, Response response) {
                 // do nothing
@@ -170,51 +170,13 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
             @Override
             public void failure(RetrofitError error) {
                 if (callback != null) {
-                    callback.failure(error);
+                    callback.failure(error.getMessage());
                 } else {
                     throw error;
                 }
             }
         });
     }
-
-//    /**
-//     * Rest oData call for Retrieve using Query parameters
-//     * @param entitySchemaName
-//     * @param id
-//     * @param queryOptions
-//     * @param callback
-//     */
-//    @Override
-//    public void Retrieve(String entitySchemaName, UUID id, @NonNull QueryOptions queryOptions,
-//                         final Callback<Entity> callback) {
-//
-//        RestEndpoint.oDataGet(entitySchemaName, id, queryOptions.getQueryMap(),
-//                new Callback<Object>() {
-//                    @Override
-//                    public void success(Object o, Response response) {
-//                        Entity entity = new Entity();
-////                        EntityCollection entityCollection = new EntityCollection();
-////                        ArrayList<LinkedTreeMap> entities = (ArrayList<LinkedTreeMap>) find((LinkedTreeMap) o, "results");
-////
-////                        for (LinkedTreeMap treeMap : entities) {
-////                            entityCollection.getEntities().add(Entity.loadFromJson(treeMap));
-////                        }
-////
-////                        try {
-////                            entityCollection.setTotalRecordCount(entities.size());
-////                        } catch (Exception ex) {
-////                        }
-////
-////                        callback.success(entityCollection, response);
-//                    }
-//
-//                    @Override
-//                    public void failure(RetrofitError error) {
-//                        callback.failure(error);
-//                    }
-//                });
-//    }
 
     /**
      * Rest oData call for Retrieve using Query parameters
@@ -229,7 +191,7 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
                                  @NonNull QueryOptions queryOptions, final Callback<EntityCollection> callback) {
 
         RestEndpoint.oDataGet(entitySchemaName, id, relationshipName, queryOptions.getQueryMap(),
-                new Callback<Object>() {
+                new retrofit.Callback<Object>() {
                     @Override
                     public void success(Object o, Response response) {
                         EntityCollection entityCollection = new EntityCollection();
@@ -244,12 +206,12 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
                         } catch (Exception ex) {
                         }
 
-                        callback.success(entityCollection, response);
+                        callback.success(entityCollection);
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        callback.failure(error);
+                        callback.failure(error.getMessage());
                     }
                 });
     }
@@ -263,7 +225,7 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
      */
     @Override
     public void RetrieveMultiple(String entitySchemaName, QueryOptions query, final Callback<EntityCollection> callback) {
-        RestEndpoint.oDataGet(entitySchemaName, query.getQueryMap(), new Callback<Object>() {
+        RestEndpoint.oDataGet(entitySchemaName, query.getQueryMap(), new retrofit.Callback<Object>() {
             @Override
             public void success(Object o, Response response) {
                 EntityCollection entityCollection = new EntityCollection();
@@ -278,7 +240,7 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
                 } catch (Exception ex) {
                 }
 
-                callback.success(entityCollection, response);
+                callback.success(entityCollection);
             }
 
             @Override
@@ -296,7 +258,7 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
 
         Gson gson = new Gson();
         RestEndpoint.oDataPost(entity.getClass().getSimpleName(), entity.getId(), new TypedString(gson.toJson(entity)),
-                new Callback<Object>() {
+                new retrofit.Callback<Object>() {
                     @Override
                     public void success(Object o, Response response) {
                         // do nothing
@@ -305,7 +267,7 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
                     @Override
                     public void failure(RetrofitError error) {
                         if (callback != null) {
-                            callback.failure(error);
+                            callback.failure(error.getMessage());
                         } else {
                             throw error;
                         }
