@@ -130,7 +130,6 @@ public class Utils {
     public static Object objectFromXml(XmlPullParser parser) {
         try {
             Object value = null;
-            // Obtain CrmType. I haven't cover all types yet.
             String CrmType = parser.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance", "type").substring(2);
             switch (CrmType) {
                 case "long":
@@ -166,7 +165,7 @@ public class Utils {
                 case "dateTime":
                     parser.next();
                     if (parser.getEventType() == XmlPullParser.TEXT) {
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-DD'T'HH:mm:ss'Z'");
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                         value = simpleDateFormat.parse(parser.getText());
                     }
                     break;

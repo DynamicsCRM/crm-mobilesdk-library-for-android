@@ -154,6 +154,33 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
                 });
     }
 
+
+    @Override
+    public void Create(String relatedToSchemaName, UUID relatedToId, Entity create, String relationshipName, final Callback<UUID> callback) {
+        Gson gson = new Gson();
+        String body;
+        if (create.getClass().getSuperclass() != Entity.class) {
+            body = gson.toJson(create.getAttributes());
+        }
+        else {
+            body = gson.toJson(Utils.getSchemaAttributes(create));
+        }
+
+        RestEndpoint.oDataPost(relatedToSchemaName, relatedToId, relationshipName,
+                new TypedString(body), new retrofit.Callback<Object>() {
+                    @Override
+                    public void success(Object o, Response response) {
+                        Entity entity = Entity.loadFromJson((LinkedTreeMap) ((LinkedTreeMap) o).get("d"));
+                        callback.success(entity.getId());
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        callback.failure(error.getMessage());
+                    }
+                });
+    }
+
     /**
      * oData Delete Request
      * @param entitySchemaName The schema name of the entity specified in the entityId parameter.

@@ -27,6 +27,16 @@ public interface RestOrganizationService {
     void Create(Entity relatedTo, Entity create, String relationshipName, Callback<UUID> callback) throws InvalidClassException;
 
     /**
+     *
+     * @param relatedToSchemaName Schema Name of the entity that you are relating the new entity to
+     * @param relatedToId Guid/UUID of the entity that you are relating the new entity to
+     * @param create Entity you will be creating
+     * @param relationshipName Schema Relationship Name
+     * @param callback The callback object that will be fired on response from CRM
+     */
+    void Create(String relatedToSchemaName, UUID relatedToId, Entity create, String relationshipName, Callback<UUID> callback);
+
+    /**
      * Deletes a record.
      * @param entitySchemaName The logical name of the entity specified in the entityId parameter.
      * @param id The ID of the record of the record to delete.
