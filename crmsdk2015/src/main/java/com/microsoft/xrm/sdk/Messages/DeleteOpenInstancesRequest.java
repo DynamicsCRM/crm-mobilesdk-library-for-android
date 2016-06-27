@@ -7,9 +7,6 @@ import com.microsoft.xrm.sdk.OrganizationRequest;
 
 import java.util.Date;
 
-/**
- * Created on 3/27/2015.
- */
 public final class DeleteOpenInstancesRequest extends OrganizationRequest {
 
     public DeleteOpenInstancesRequest() {

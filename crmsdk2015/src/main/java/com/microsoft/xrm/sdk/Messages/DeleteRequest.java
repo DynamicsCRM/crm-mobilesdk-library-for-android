@@ -6,9 +6,6 @@ import com.microsoft.xrm.sdk.EntityReference;
 import com.microsoft.xrm.sdk.OrganizationRequest;
 import com.microsoft.xrm.sdk.OrganizationResponse;
 
-/**
- * Created on 3/24/2015.
- */
 public final class DeleteRequest extends OrganizationRequest {
 
     public DeleteRequest() {

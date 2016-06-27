@@ -4,9 +4,6 @@ import android.support.annotation.Nullable;
 
 import com.microsoft.xrm.sdk.OrganizationRequest;
 
-/**
- * Created on 3/24/2015.
- */
 public final class CanBeReferencedRequest extends OrganizationRequest {
 
     public CanBeReferencedRequest() {

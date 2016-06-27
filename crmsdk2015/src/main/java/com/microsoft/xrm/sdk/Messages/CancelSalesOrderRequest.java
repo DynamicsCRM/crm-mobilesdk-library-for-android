@@ -6,9 +6,6 @@ import com.microsoft.xrm.sdk.Entity;
 import com.microsoft.xrm.sdk.OptionSetValue;
 import com.microsoft.xrm.sdk.OrganizationRequest;
 
-/**
- * Created on 3/26/2015.
- */
 public final class CancelSalesOrderRequest extends OrganizationRequest {
 
     public CancelSalesOrderRequest() {

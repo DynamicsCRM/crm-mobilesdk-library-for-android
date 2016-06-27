@@ -4,9 +4,6 @@ import com.microsoft.xrm.sdk.Utils;
 
 import java.util.UUID;
 
-/**
- * Created on 3/26/2015.
- */
 public abstract class MetadataBase {
 
     private UUID id;
@@ -28,11 +25,8 @@ public abstract class MetadataBase {
         this.hasChanged = hasChanged;
     }
 
-    protected String toValueXml()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Utils.objectToXml(hasChanged, "h:HasChanged", true));
-        stringBuilder.append(Utils.objectToXml(id, "h:MetadataId", true));
-        return stringBuilder.toString();
+    protected String toValueXml() {
+        return Utils.objectToXml(hasChanged, "h:HasChanged", true) +
+            Utils.objectToXml(id, "h:MetadataId", true);
     }
 }

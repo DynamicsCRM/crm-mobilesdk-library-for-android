@@ -20,10 +20,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
-
-/**
- * Created on 3/30/2015.
- */
 public class Utils {
 
     public static String encodeXML(String data) {
@@ -454,7 +450,7 @@ public class Utils {
             }
         }
 
-        if (elementOnly != null && (boolean)elementOnly) {
+        if (elementOnly != null && elementOnly) {
             return String.format("<%1$s>%2$s</%1$s>", action, value);
         }
         else {

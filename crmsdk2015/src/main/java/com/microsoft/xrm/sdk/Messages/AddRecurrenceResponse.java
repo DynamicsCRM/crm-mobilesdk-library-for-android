@@ -7,9 +7,6 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.util.UUID;
 
-/**
- * Created on 3/26/2015.
- */
 public final class AddRecurrenceResponse extends OrganizationResponse {
 
     private UUID id;

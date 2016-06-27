@@ -2,9 +2,6 @@ package com.microsoft.xrm.sdk;
 
 import com.microsoft.xrm.sdk.Metadata.MetadataBase;
 
-/**
- * Created on 3/26/2015.
- */
 public final class LocalizedLabel extends MetadataBase {
 
     private String label;
@@ -44,11 +41,9 @@ public final class LocalizedLabel extends MetadataBase {
 
     protected String toValueXml()
     {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(super.toValueXml());
-        stringBuilder.append(Utils.objectToXml(this.isManaged, "a:IsManaged", true));
-        stringBuilder.append(Utils.objectToXml(this.label, "a:Label", true));
-        stringBuilder.append(Utils.objectToXml(this.languageCode, "a:LanguageCode", true));
-        return stringBuilder.toString();
+        return super.toValueXml() +
+            Utils.objectToXml(this.isManaged, "a:IsManaged", true) +
+            Utils.objectToXml(this.label, "a:Label", true) +
+            Utils.objectToXml(this.languageCode, "a:LanguageCode", true);
     }
 }

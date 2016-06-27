@@ -2,11 +2,7 @@ package com.microsoft.xrm.sdk;
 
 import org.xmlpull.v1.XmlPullParser;
 
-/**
- * Created on 4/1/15.
- */
 public final class AliasedValue {
-
 
     private String AttributeLogicalName;
     private String EntityLogicalName;

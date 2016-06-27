@@ -6,9 +6,6 @@ import com.microsoft.xrm.sdk.EntityReference;
 import com.microsoft.xrm.sdk.OrganizationRequest;
 import com.microsoft.xrm.sdk.ColumnSet;
 
-/**
- * Created on 3/24/2015.
- */
 public final class RetrieveRequest extends OrganizationRequest {
 
     public RetrieveRequest() {

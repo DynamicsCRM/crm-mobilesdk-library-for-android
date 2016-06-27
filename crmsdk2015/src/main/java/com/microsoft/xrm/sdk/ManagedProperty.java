@@ -1,8 +1,5 @@
 package com.microsoft.xrm.sdk;
 
-/**
- * Created on 3/26/2015.
- */
 public abstract class ManagedProperty<T> {
 
     private T value;
@@ -42,11 +39,8 @@ public abstract class ManagedProperty<T> {
         this.logicalName = logicalName;
     }
 
-    protected String ToValueXml()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Utils.objectToXml(this.canBeChanged, "a:CanBeChanged", true));
-        stringBuilder.append(Utils.objectToXml(this.logicalName, "a:ManagedPropertyLogicalName", true));
-        return stringBuilder.toString();
+    protected String ToValueXml() {
+        return Utils.objectToXml(this.canBeChanged, "a:CanBeChanged", true) +
+        Utils.objectToXml(this.logicalName, "a:ManagedPropertyLogicalName", true);
     }
 }

@@ -7,9 +7,6 @@ import com.microsoft.xrm.sdk.EntityReferenceCollection;
 import com.microsoft.xrm.sdk.OrganizationRequest;
 import com.microsoft.xrm.sdk.Relationship;
 
-/**
- * Created on 3/24/2015.
- */
 public final class AssociateRequest extends OrganizationRequest {
 
     public AssociateRequest() {

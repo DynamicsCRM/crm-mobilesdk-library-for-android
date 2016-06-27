@@ -2,9 +2,6 @@ package com.microsoft.xrm.sdk;
 
 import org.xmlpull.v1.XmlPullParser;
 
-/**
- * Created on 3/6/2015.
- */
 public final class AttributeCollection extends DataMapCollection<String, Object> {
 
     String ToXml() {
@@ -16,8 +13,10 @@ public final class AttributeCollection extends DataMapCollection<String, Object>
         stringBuilder.append("<a:Attributes>");
         for (String key : this.keySet()) {
             stringBuilder.append("<a:KeyValuePairOfstringanyType>");
-            stringBuilder.append("<b:key>" + Utils.encodeXML(key) + "</b:key>");
-            stringBuilder.append(Utils.objectToXml(this.get(key), "b:value", null));
+                stringBuilder.append("<b:key>");
+                    stringBuilder.append(Utils.encodeXML(key));
+                stringBuilder.append("</b:key>");
+                stringBuilder.append(Utils.objectToXml(this.get(key), "b:value", null));
             stringBuilder.append("</a:KeyValuePairOfstringanyType>");
         }
         stringBuilder.append("</a:Attributes>");

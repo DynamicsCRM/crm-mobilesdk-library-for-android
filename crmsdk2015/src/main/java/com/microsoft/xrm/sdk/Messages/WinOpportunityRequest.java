@@ -6,9 +6,6 @@ import com.microsoft.xrm.sdk.Entity;
 import com.microsoft.xrm.sdk.OptionSetValue;
 import com.microsoft.xrm.sdk.OrganizationRequest;
 
-/**
- * Created on 3/27/2015.
- */
 public final class WinOpportunityRequest extends OrganizationRequest {
 
     public WinOpportunityRequest() {

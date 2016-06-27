@@ -1,8 +1,5 @@
 package com.microsoft.xrm.sdk;
 
-/**
- * Created on 3/26/2015.
- */
 public final class Label {
 
     private LocalizedLabelCollection localizedLabels;
@@ -22,9 +19,7 @@ public final class Label {
 
     String toValueXml()
     {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Utils.objectToXml(this.localizedLabels, "a:LocalizedLabels", true));
-        stringBuilder.append(Utils.objectToXml(this.userLocalizedLabel, "a:UserLocalizedLabel", true));
-        return stringBuilder.toString();
+        return Utils.objectToXml(this.localizedLabels, "a:LocalizedLabels", true) +
+            Utils.objectToXml(this.userLocalizedLabel, "a:UserLocalizedLabel", true);
     }
 }

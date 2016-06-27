@@ -7,9 +7,6 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.util.UUID;
 
-/**
- * Created on 3/27/2015.
- */
 public final class CreateExceptionResponse extends OrganizationResponse {
 
     private UUID id;

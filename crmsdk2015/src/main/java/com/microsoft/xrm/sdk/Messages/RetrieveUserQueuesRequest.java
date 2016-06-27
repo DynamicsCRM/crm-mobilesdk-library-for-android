@@ -4,9 +4,6 @@ import com.microsoft.xrm.sdk.OrganizationRequest;
 
 import java.util.UUID;
 
-/**
- * Created on 3/31/2015.
- */
 public final class RetrieveUserQueuesRequest extends OrganizationRequest {
 
     public RetrieveUserQueuesRequest() {

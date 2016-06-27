@@ -2,9 +2,6 @@ package com.microsoft.xrm.sdk;
 
 import java.util.UUID;
 
-/**
- * Created on 3/31/2015.
- */
 public final class RolePrivilege {
 
     private UUID businessUnitId;
@@ -40,12 +37,9 @@ public final class RolePrivilege {
         this.privilegeId = privilegeId;
     }
 
-    String toValueXml()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Utils.objectToXml(businessUnitId, "g:BusinessUnitId", true));
-        stringBuilder.append(Utils.objectToXml(depth, "g:Depth", true));
-        stringBuilder.append(Utils.objectToXml(privilegeId, "g:PrivilegeId", true));
-        return stringBuilder.toString();
+    String toValueXml() {
+        return Utils.objectToXml(businessUnitId, "g:BusinessUnitId", true) +
+            Utils.objectToXml(depth, "g:Depth", true) +
+            Utils.objectToXml(privilegeId, "g:PrivilegeId", true);
     }
 }

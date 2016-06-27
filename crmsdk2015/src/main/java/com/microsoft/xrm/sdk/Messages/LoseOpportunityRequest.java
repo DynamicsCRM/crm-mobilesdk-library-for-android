@@ -5,10 +5,6 @@ import android.support.annotation.Nullable;
 import com.microsoft.xrm.sdk.Entity;
 import com.microsoft.xrm.sdk.OptionSetValue;
 import com.microsoft.xrm.sdk.OrganizationRequest;
-
-/**
- * Created on 3/27/2015.
- */
 public final class LoseOpportunityRequest extends OrganizationRequest {
 
     public LoseOpportunityRequest() {

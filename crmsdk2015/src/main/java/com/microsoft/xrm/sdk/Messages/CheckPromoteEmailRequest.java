@@ -4,9 +4,6 @@ import android.support.annotation.Nullable;
 
 import com.microsoft.xrm.sdk.OrganizationRequest;
 
-/**
- * Created on 3/26/2015.
- */
 public final class CheckPromoteEmailRequest extends OrganizationRequest {
 
     public CheckPromoteEmailRequest() {

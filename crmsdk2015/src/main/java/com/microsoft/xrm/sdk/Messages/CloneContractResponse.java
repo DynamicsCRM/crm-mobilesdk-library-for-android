@@ -6,9 +6,6 @@ import com.microsoft.xrm.sdk.Utils;
 
 import org.xmlpull.v1.XmlPullParser;
 
-/**
- * Created on 3/26/2015.
- */
 public final class CloneContractResponse extends OrganizationResponse {
 
     private Entity entity;

@@ -7,9 +7,6 @@ import org.xmlpull.v1.XmlPullParser;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created on 3/2/2015.
- */
 public class EntityCollection {
 
     private String EntityName;
@@ -26,13 +23,13 @@ public class EntityCollection {
     }
 
     public EntityCollection(List<Entity> list) {
-        this.entities = new DataCollection<Entity>(list);
+        this.entities = new DataCollection<>(list);
     }
 
 
     public DataCollection<Entity> getEntities() {
         if (this.entities == null) {
-            entities = new DataCollection<Entity>();
+            entities = new DataCollection<>();
         }
         return this.entities;
     }
@@ -113,17 +110,14 @@ public class EntityCollection {
         }
     }
 
-    String toValueXml()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Utils.objectToXml(this.entities.toArray(), "a:Entities", true));
-        stringBuilder.append(Utils.objectToXml(EntityName, "a:EntityName", true));
-        stringBuilder.append(Utils.objectToXml(this.minActiveRowVersion, "a:MinActiveRowVersion", true));
-        stringBuilder.append(Utils.objectToXml(this.moreRecords, "a:MoreRecords", true));
-        stringBuilder.append(Utils.objectToXml(this.pagingCookie, "a:PagingCookie", true));
-        stringBuilder.append(Utils.objectToXml(this.totalRecordCount, "a:TotalRecordCount", true));
-        stringBuilder.append(Utils.objectToXml(this.totalRecordCountLimitExceeded, "a:TotalRecordCountLimitExceeded", true));
-        return stringBuilder.toString();
+    String toValueXml() {
+        return Utils.objectToXml(this.entities.toArray(), "a:Entities", true) +
+            Utils.objectToXml(EntityName, "a:EntityName", true) +
+            Utils.objectToXml(this.minActiveRowVersion, "a:MinActiveRowVersion", true) +
+            Utils.objectToXml(this.moreRecords, "a:MoreRecords", true) +
+            Utils.objectToXml(this.pagingCookie, "a:PagingCookie", true) +
+            Utils.objectToXml(this.totalRecordCount, "a:TotalRecordCount", true) +
+            Utils.objectToXml(this.totalRecordCountLimitExceeded, "a:TotalRecordCountLimitExceeded", true);
     }
 
     String toValueJson() {

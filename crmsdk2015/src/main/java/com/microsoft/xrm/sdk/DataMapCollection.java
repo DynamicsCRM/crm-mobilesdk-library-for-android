@@ -7,12 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created on 3/6/2015.
- */
 public class DataMapCollection<TKey, TValue> implements Map<TKey, TValue> {
 
-    private Map<TKey, TValue> mapCollection = new HashMap<TKey, TValue>();
+    private Map<TKey, TValue> mapCollection = new HashMap<>();
     private boolean isReadOnly;
 
     DataMapCollection() {
@@ -77,7 +74,7 @@ public class DataMapCollection<TKey, TValue> implements Map<TKey, TValue> {
     }
 
     @Override
-    public void putAll(Map<? extends TKey, ? extends TValue> map) {
+    public void putAll(@NonNull Map<? extends TKey, ? extends TValue> map) {
         try {
             this.checkIsReadOnly();
             mapCollection.putAll(map);

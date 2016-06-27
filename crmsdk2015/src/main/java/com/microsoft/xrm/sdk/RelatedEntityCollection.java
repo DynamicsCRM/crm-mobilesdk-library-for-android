@@ -2,15 +2,7 @@ package com.microsoft.xrm.sdk;
 
 import java.util.Set;
 
-/**
- * Created on 3/6/2015.
- */
 public final class RelatedEntityCollection extends DataMapCollection<Relationship, EntityCollection> {
-
-    @Override
-    public boolean getIsReadOnly() {
-        return super.getIsReadOnly();
-    }
 
     @Override
     public void setIsReadOnly(boolean value) {

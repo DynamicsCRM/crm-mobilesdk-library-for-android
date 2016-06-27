@@ -4,9 +4,6 @@
 //
 //import com.microsoft.xrm.sdk.OrganizationRequest;
 //
-///**
-// * Created on 3/24/2015.
-// */
 //public final class DeleteOptionSetRequest extends OrganizationRequest {
 //
 //    public DeleteOptionSetRequest() {

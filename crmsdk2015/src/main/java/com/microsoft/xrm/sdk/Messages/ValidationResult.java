@@ -6,9 +6,6 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.util.UUID;
 
-/**
- * Created on 3/31/2015.
- */
 public class ValidationResult {
     private UUID activityId;
     private TraceInfo traceInfo;

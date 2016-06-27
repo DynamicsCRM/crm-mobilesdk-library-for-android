@@ -4,9 +4,6 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.util.List;
 
-/**
- * Created on 3/5/2015.
- */
 public class EntityReferenceCollection extends DataCollection<EntityReference> {
 
     public EntityReferenceCollection() {

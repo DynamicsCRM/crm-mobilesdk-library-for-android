@@ -1,8 +1,5 @@
 package com.microsoft.xrm.sdk.Client;
 
-/**
- * Created on 3/12/15.
- */
 public enum QueryOperators {
     /**
      * Equal

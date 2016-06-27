@@ -4,9 +4,6 @@ import com.microsoft.xrm.sdk.OrganizationRequest;
 
 import java.util.UUID;
 
-/**
- * Created on 3/26/2015.
- */
 public final class CloneContractRequest extends OrganizationRequest {
 
     public CloneContractRequest() {
@@ -27,6 +24,7 @@ public final class CloneContractRequest extends OrganizationRequest {
     }
 
     public boolean getIncludeCanceledLines() {
+        //noinspection SimplifiableIfStatement
         if (this.getParameters().containsKey("IncludeCanceledLines")) {
             return (boolean) this.getParameters().get("IncludeCanceledLines");
         }

@@ -2,9 +2,6 @@ package com.microsoft.xrm.sdk.Messages;
 
 import java.util.ArrayList;
 
-/**
- * Created on 3/31/2015.
- */
 public final class TraceInfo {
 
     private ArrayList<ErrorInfo> errorInfoList;

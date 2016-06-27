@@ -2,9 +2,6 @@ package com.microsoft.xrm.sdk;
 
 import org.xmlpull.v1.XmlPullParser;
 
-/**
- * Created on 3/6/2015.
- */
 public final class FormattedValueCollection extends DataMapCollection<String, String> {
 
     String toXml() {
@@ -17,7 +14,11 @@ public final class FormattedValueCollection extends DataMapCollection<String, St
         stringBuilder.append("<a:FormattedValues>");
         for (String key : this.keySet()) {
             stringBuilder.append("<a:KeyValuePairOfstringstring>");
-            stringBuilder.append("<b:key>" + Utils.encodeXML(key) + "</b:key><b:value>" + Utils.encodeXML(this.get(key)) + "</b:value>");
+                stringBuilder.append("<b:key>");
+                    stringBuilder.append(Utils.encodeXML(key));
+                stringBuilder.append("</b:key><b:value>");
+                    stringBuilder.append(Utils.encodeXML(this.get(key)));
+                stringBuilder.append("</b:value>");
             stringBuilder.append("</a:KeyValuePairOfstringstring>");
         }
         stringBuilder.append("</a:FormattedValues>");

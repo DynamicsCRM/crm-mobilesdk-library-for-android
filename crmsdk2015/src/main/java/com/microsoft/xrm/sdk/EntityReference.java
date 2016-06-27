@@ -91,11 +91,9 @@ public class EntityReference {
     }
 
     String toValueXml() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Utils.objectToXml(Id, "a:Id", true));
-        stringBuilder.append(Utils.objectToXml(LogicalName, "a:LogicalName", true));
-        stringBuilder.append(Utils.objectToXml(Name, "a:Name", true));
-        return stringBuilder.toString();
+        return Utils.objectToXml(Id, "a:Id", true) +
+            Utils.objectToXml(LogicalName, "a:LogicalName", true) +
+            Utils.objectToXml(Name, "a:Name", true);
     }
 
     static EntityReference loadFromXml(XmlPullParser  parser) {
