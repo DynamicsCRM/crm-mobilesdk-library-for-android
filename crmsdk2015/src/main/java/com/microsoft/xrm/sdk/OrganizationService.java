@@ -4,10 +4,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.microsoft.xrm.sdk.Query.QueryBase;
+import com.microsoft.xrm.sdk.Callback;
 
 import java.util.UUID;
-
-import retrofit.Callback;
 
 /**
  * Created on 3/5/2015.

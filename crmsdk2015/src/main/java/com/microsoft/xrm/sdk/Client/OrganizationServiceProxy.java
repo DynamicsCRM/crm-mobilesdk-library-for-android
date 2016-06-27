@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Xml;
 
+import com.microsoft.xrm.sdk.Callback;
 import com.microsoft.xrm.sdk.Entity;
 import com.microsoft.xrm.sdk.EntityCollection;
 import com.microsoft.xrm.sdk.EntityReferenceCollection;
@@ -20,7 +21,6 @@ import org.xmlpull.v1.XmlPullParser;
 import java.io.ByteArrayInputStream;
 import java.util.UUID;
 
-import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -43,7 +43,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
 
         @Headers({"Content-Type: text/xml; charset=utf-8"})
         @POST("/XRMServices/2011/Organization.svc/web/")
-        void Soap(@Header("SOAPAction") String soapAction, @Body TypedString body, Callback<?> callback);
+        void Soap(@Header("SOAPAction") String soapAction, @Body TypedString body, retrofit.Callback<?> callback);
 
     }
 
@@ -93,7 +93,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
         content.append("</s:Body>");
         content.append("</s:Envelope>");
 
-        SoapEndpoint.Soap(SoapActions.CREATE, new TypedString(content.toString()), new Callback<String>() {
+        SoapEndpoint.Soap(SoapActions.CREATE, new TypedString(content.toString()), new retrofit.Callback<String>() {
             @Override
             public void success(String xml, Response response) {
                 UUID newId = new UUID(0L, 0L);
@@ -116,12 +116,12 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
                     ex.getCause().printStackTrace();
                 }
 
-                callback.success(newId, response);
+                callback.success(newId);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                callback.failure(error);
+                callback.failure(error.getMessage());
             }
         });
     }
@@ -143,7 +143,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
         content.append("</s:Body>");
         content.append("</s:Envelope>");
 
-        SoapEndpoint.Soap(SoapActions.DELETE, new TypedString(content.toString()), new Callback<String>() {
+        SoapEndpoint.Soap(SoapActions.DELETE, new TypedString(content.toString()), new retrofit.Callback<String>() {
             @Override
             public void success(String xml, Response response) {
                 // do nothing
@@ -152,7 +152,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
             @Override
             public void failure(RetrofitError error) {
                 if (callback != null) {
-                    callback.failure(error);
+                    callback.failure(error.getMessage());
                 } else {
                     throw error;
                 }
@@ -171,7 +171,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
         content.append("</s:Body>");
         content.append("</s:Envelope>");
 
-        SoapEndpoint.Soap(SoapActions.EXECUTE, new TypedString(content.toString()), new Callback<String>() {
+        SoapEndpoint.Soap(SoapActions.EXECUTE, new TypedString(content.toString()), new retrofit.Callback<String>() {
             @Override
             public void success(String xml, Response response) {
                 OrganizationResponse orgResponse = request.getResponseType();
@@ -191,12 +191,12 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
                     ex.getCause().printStackTrace();
                 }
 
-                callback.success(orgResponse, response);
+                callback.success(orgResponse);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                callback.failure(error);
+                callback.failure(error.getMessage());
             }
         });
     }
@@ -221,7 +221,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
         content.append("</s:Body>");
         content.append("</s:Envelope>");
 
-        SoapEndpoint.Soap(SoapActions.RETRIEVE, new TypedString(content.toString()), new Callback<String>() {
+        SoapEndpoint.Soap(SoapActions.RETRIEVE, new TypedString(content.toString()), new retrofit.Callback<String>() {
 
             @Override
             public void success(String xml, Response response) {
@@ -243,13 +243,13 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
                 }
 
                 if (entity != null) {
-                    callback.success(entity, response);
+                    callback.success(entity);
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                callback.failure(error);
+                callback.failure(error.getMessage());
             }
         });
     }
@@ -276,7 +276,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
         content.append("</s:Body>");
         content.append("</s:Envelope>");
 
-        SoapEndpoint.Soap(SoapActions.ASSOCIATE, new TypedString(content.toString()), new Callback<String>() {
+        SoapEndpoint.Soap(SoapActions.ASSOCIATE, new TypedString(content.toString()), new retrofit.Callback<String>() {
             @Override
             public void success(String xml, Response response) {
                 //do nothing
@@ -285,7 +285,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
             @Override
             public void failure(RetrofitError error) {
                 if (callback != null) {
-                    callback.failure(error);
+                    callback.failure(error.getMessage());
                 } else {
                     throw error;
                 }
@@ -315,7 +315,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
         content.append("</s:Body>");
         content.append("</s:Envelope>");
 
-        SoapEndpoint.Soap(SoapActions.DISASSOCIATE, new TypedString(content.toString()), new Callback<String>() {
+        SoapEndpoint.Soap(SoapActions.DISASSOCIATE, new TypedString(content.toString()), new retrofit.Callback<String>() {
             @Override
             public void success(String xml, Response response) {
                 // do nothing
@@ -324,7 +324,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
             @Override
             public void failure(RetrofitError error) {
                 if (callback != null) {
-                    callback.failure(error);
+                    callback.failure(error.getMessage());
                 } else {
                     throw error;
                 }
@@ -349,7 +349,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
         content.append("</s:Body>");
         content.append("</s:Envelope>");
 
-        SoapEndpoint.Soap(SoapActions.RETRIEVE_MULTIPLE, new TypedString(content.toString()), new Callback<String>() {
+        SoapEndpoint.Soap(SoapActions.RETRIEVE_MULTIPLE, new TypedString(content.toString()), new retrofit.Callback<String>() {
             @Override
             public void success(String xml, Response response) {
                 EntityCollection entityCollection = null;
@@ -369,13 +369,13 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
                 }
 
                 if (entityCollection != null) {
-                    callback.success(entityCollection, response);
+                    callback.success(entityCollection);
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                callback.failure(error);
+                callback.failure(error.getMessage());
             }
         });
     }
@@ -391,7 +391,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
         content.append("</s:Body>");
         content.append("</s:Envelope>");
 
-        SoapEndpoint.Soap(SoapActions.UPDATE, new TypedString(content.toString()), new Callback<String>() {
+        SoapEndpoint.Soap(SoapActions.UPDATE, new TypedString(content.toString()), new retrofit.Callback<String>() {
             @Override
             public void success(String xml, Response response) {
                 // no response
@@ -400,7 +400,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
             @Override
             public void failure(RetrofitError error) {
                 if (callback != null) {
-                    callback.failure(error);
+                    callback.failure(error.getMessage());
                 } else {
                     throw error;
                 }

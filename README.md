@@ -9,7 +9,7 @@ This document describes the Java version of the Dynamics CRM Mobile SDK that is 
 
 This SDK supports and has been tested with the following development environment.
 
-* Android API level 18 through 22
+* Android API level 18 through 23
 * Android Studio version 1.0 and later
 
 At build time, the following open source or 3rd party libraries are downloaded and installed, which require and active internet connection on the development computer.
@@ -24,7 +24,21 @@ This SDK is known to work with Dynamics CRM 2013 and 2015, for both on-premises 
 
 Prior to using the methods provided by this mobile SDK, you must build and run the (.NET) *MobileSdkGen* command line tool to generate early-bound classes for each entity in the CRM organization that your app needs to access. The tool plus related documentation is provided as a separate download. This tool is similar to the *CrmSvcUtil* tool provided in the .NET version of the CRM SDK. After running the MobileSdkGen tool, the result is a folder filled with .java class files, one for each entity type (including custom entity types) and option sets that you have specified.
 
-For more information about using early-bound entity types, refer to the related CRM SDK topic [Use the early bound entity classes in code](https://msdn.microsoft.com/en-us/library/gg328210.aspx). For more information about the CrmSvcUtil tool, see [Create early bound entity classes with the code generation tool](https://msdn.microsoft.com/en-us/library/gg327844(v=crm.7).aspx).
+For more information about using early-bound entity types, refer to the related CRM SDK topic [Use the early bound entity classes in code](https://msdn.microsoft.com/en-us/library/gg328210.aspx). For more information about the CrmSvcUtil tool, see [Create early bound entity classes with the code generation tool](https://goo.gl/QhikBZ).
+
+To include this library into your project, you should just take a built *.aar file from the releases section, or from the build folder of this project. You should place that file into your lib folder for you application and include the following into your application's `gradle.build` file:
+
+```groovy
+compile(name: 'crmsdk2015', ext: 'aar') {
+    transitive = true;
+}
+```
+
+Also keep in mind that if you are using Proguard you should add this to your `proguard-rules.pro` file:
+
+```proguard
+-keep class * extends com.microsoft.xrm.sdk.Entity { *; }
+```
 
 ## Web Service Proxies
 
