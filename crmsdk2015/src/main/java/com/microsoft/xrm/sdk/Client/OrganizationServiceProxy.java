@@ -103,7 +103,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
             .append(GetEnvelopeHeader())
                 .append("<s:Body>")
                     .append("<d:Create>")
-                        .append(Utils.decodeXML(Utils.objectToXml(entity, "d:entity", true)))
+                        .append(Utils.objectToXml(entity, "d:entity", true))
                     .append("</d:Create>")
                 .append("</s:Body>")
             .append("</s:Envelope>");
