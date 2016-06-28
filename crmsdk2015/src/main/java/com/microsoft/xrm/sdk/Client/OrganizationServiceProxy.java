@@ -168,13 +168,14 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
                 .append("</s:Body>")
             .append("</s:Envelope>");
 
-        try {
-            return Observable.just(delete(content.toString()));
-        }
-        catch(Exception ex) {
-            return Observable.error(ex);
-        }
-
+        return Observable.defer(() -> {
+            try {
+                return Observable.just(delete(content.toString()));
+            }
+            catch(Exception ex) {
+                return Observable.error(ex);
+            }
+        });
     }
 
     private String delete(String content) throws Exception {
@@ -311,12 +312,14 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
                 .append("</s:Body>")
             .append("</s:Envelope>");
 
-        try {
-            return Observable.just(associate(content.toString()));
-        }
-        catch(Exception ex) {
-            return Observable.error(ex);
-        }
+        return Observable.defer(() -> {
+            try {
+                return Observable.just(associate(content.toString()));
+            }
+            catch(Exception ex) {
+                return Observable.error(ex);
+            }
+        });
     }
 
     private String associate(String content) throws Exception {
@@ -347,12 +350,14 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
                 .append("</s:Body>")
             .append("</s:Envelope>");
 
-        try {
-            return Observable.just(disassociate(content.toString()));
-        }
-        catch(Exception ex) {
-            return Observable.error(ex);
-        }
+        return Observable.defer(() -> {
+            try {
+                return Observable.just(disassociate(content.toString()));
+            }
+            catch(Exception ex) {
+                return Observable.error(ex);
+            }
+        });
     }
 
     private String disassociate(String content) throws Exception {
@@ -434,12 +439,14 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
                 .append("</s:Body>")
             .append("</s:Envelope>");
 
-        try {
-            return Observable.just(update(content.toString()));
-        }
-        catch(Exception ex) {
-            return Observable.error(ex);
-        }
+        return Observable.defer(() -> {
+            try {
+                return Observable.just(update(content.toString()));
+            }
+            catch(Exception ex) {
+                return Observable.error(ex);
+            }
+        });
     }
 
     private String update(String content) throws Exception {
