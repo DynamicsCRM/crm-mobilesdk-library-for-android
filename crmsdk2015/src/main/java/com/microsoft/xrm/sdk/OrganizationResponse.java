@@ -2,9 +2,6 @@ package com.microsoft.xrm.sdk;
 
 import org.xmlpull.v1.XmlPullParser;
 
-/**
- * Created on 3/5/2015.
- */
 public class OrganizationResponse {
 
     public String ResponseName;

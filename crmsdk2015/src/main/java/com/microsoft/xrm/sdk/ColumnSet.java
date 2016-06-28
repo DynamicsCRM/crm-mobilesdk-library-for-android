@@ -2,13 +2,10 @@ package com.microsoft.xrm.sdk;
 
 import java.util.Arrays;
 
-/**
- * Created on 3/5/2015.
- */
 public class ColumnSet {
 
     private boolean allColumns;
-    private DataCollection<String> Columns;
+    private final DataCollection<String> Columns;
 
     public ColumnSet() {
         this.Columns = new DataCollection<>();
@@ -34,9 +31,7 @@ public class ColumnSet {
 
     public String toValueXml()
     {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Utils.objectToXml(allColumns, "a:AllColumns", true));
-        stringBuilder.append(Utils.objectToXml(Columns.toArray(new String[Columns.size()]), "a:Columns", true));
-        return stringBuilder.toString();
+        return Utils.objectToXml(allColumns, "a:AllColumns", true) +
+            Utils.objectToXml(Columns.toArray(new String[Columns.size()]), "a:Columns", true);
     }
 }

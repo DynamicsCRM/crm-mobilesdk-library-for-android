@@ -1,35 +1,66 @@
 package com.microsoft.xrm.sdk.Client;
 
-import retrofit.RequestInterceptor;
 
-/**
- * Created on 3/6/2015.
- */
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Converter;
+import retrofit2.Retrofit;
+
 public abstract class ServiceProxy {
 
+    private String sessionToken;
     private String endpoint;
-    private RequestInterceptor authHeader;
+    private Interceptor authHeader;
 
-    protected ServiceProxy(String endpoint, RequestInterceptor requestInterceptor) {
+    protected ServiceProxy(@NonNull String endpoint, @NonNull final String sessionToken) {
         this.endpoint = endpoint;
-        this.authHeader = requestInterceptor;
+        this.sessionToken = sessionToken;
+        this.authHeader = buildNewInterceptor(null);
     }
 
-    protected ServiceProxy(String endpoint, final String sessionToken) {
-        this.endpoint = endpoint;
-        this.authHeader = new RequestInterceptor() {
-            @Override
-            public void intercept(RequestFacade request) {
-                request.addHeader("Authorization", "Bearer " + sessionToken.replaceAll("(\\r|\\n)", ""));
+    @NonNull
+    private Interceptor buildNewInterceptor(@Nullable final ArrayMap<String, String> headers) {
+        return chain -> {
+            Request request = chain.request();
+
+            Request.Builder builder = request.newBuilder()
+                    .addHeader("Authorization", "Bearer " + sessionToken.replaceAll("(\\r|\\n)", ""));
+
+            if (headers != null) {
+                int count = headers.size();
+                for (int i = 0; i < count; i++) {
+                    builder.addHeader(headers.keyAt(i), headers.valueAt(i));
+                }
             }
+
+            return chain.proceed(builder.build());
         };
     }
 
-    public String getEndpoint() {
-        return this.endpoint;
+    void addGlobalHeaders(@NonNull final ArrayMap<String, String> headers) {
+        this.authHeader = buildNewInterceptor(headers);
     }
 
-    public RequestInterceptor getAuthHeader() {
-        return this.authHeader;
+    @NonNull
+    private OkHttpClient buildClient() {
+        return new OkHttpClient.Builder()
+                .addInterceptor(authHeader)
+                .build();
+    }
+
+    <T> T buildService(Converter.Factory factory, @NonNull Class<T> serviceClass) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(buildClient())
+                .baseUrl(endpoint)
+//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(factory)
+                .build();
+
+        return retrofit.create(serviceClass);
     }
 }

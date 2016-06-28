@@ -5,9 +5,6 @@ import android.support.annotation.Nullable;
 import com.microsoft.xrm.sdk.EntityReference;
 import com.microsoft.xrm.sdk.OrganizationRequest;
 
-/**
- * Created on 3/27/2015.
- */
 public final class RemoveRelatedRequest extends OrganizationRequest {
 
     public RemoveRelatedRequest() {

@@ -7,9 +7,6 @@ import com.microsoft.xrm.sdk.RolePrivilege;
 
 import java.util.UUID;
 
-/**
- * Created on 3/27/2015.
- */
 public final class ReplacePrivilegesRoleRequest extends OrganizationRequest {
 
     public ReplacePrivilegesRoleRequest() {

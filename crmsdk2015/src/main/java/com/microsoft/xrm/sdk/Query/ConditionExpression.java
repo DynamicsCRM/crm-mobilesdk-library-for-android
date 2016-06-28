@@ -5,9 +5,6 @@
 //import java.util.Arrays;
 //import java.util.Collection;
 //
-///**
-// * Created on 3/6/2015.
-// */
 //public final class ConditionExpression {
 //    private String attributeName;
 //    private ConditionOperator conditionOperator;

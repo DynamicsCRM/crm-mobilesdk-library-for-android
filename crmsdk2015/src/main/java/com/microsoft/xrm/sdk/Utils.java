@@ -20,10 +20,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
-
-/**
- * Created on 3/30/2015.
- */
 public class Utils {
 
     public static String encodeXML(String data) {
@@ -33,6 +29,15 @@ public class Utils {
             .replace(">", "&gt;")
             .replace("\"", "&quot;")
             .replace("'", "&apos;");
+    }
+
+    public static String decodeXML(String data) {
+        return data
+            .replace("&amp;", "&")
+            .replace("&lt;", "<")
+            .replace("&gt;", ">")
+            .replace("&quot;", "\"")
+            .replace("&apos;", "'");
     }
 
     public static void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
@@ -113,7 +118,7 @@ public class Utils {
 
             switch(value.getClass().getSimpleName()) {
                 case "Date":
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'.000Z'");
                     value = format.format((Date)value);
                     break;
                 case "EntityCollection":
@@ -418,7 +423,7 @@ public class Utils {
                     break;
                 case "Date":
                     type = "c:dateTime";
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-DD'T'HH:mm:ss'Z'");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'.000Z'");
                     value = simpleDateFormat.format((Date)item);
                     break;
                 case "Boolean":
@@ -454,7 +459,7 @@ public class Utils {
             }
         }
 
-        if (elementOnly != null && (boolean)elementOnly) {
+        if (elementOnly != null && elementOnly) {
             return String.format("<%1$s>%2$s</%1$s>", action, value);
         }
         else {

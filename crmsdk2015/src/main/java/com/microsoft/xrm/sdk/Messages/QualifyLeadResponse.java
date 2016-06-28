@@ -6,9 +6,6 @@ import com.microsoft.xrm.sdk.Utils;
 
 import org.xmlpull.v1.XmlPullParser;
 
-/**
- * Created on 3/27/2015.
- */
 public final class QualifyLeadResponse extends OrganizationResponse {
 
     private EntityReferenceCollection createdEntities;

@@ -6,9 +6,6 @@ import com.microsoft.xrm.sdk.OrganizationRequest;
 
 import java.util.UUID;
 
-/**
- * Created on 3/26/2015.
- */
 public final class AddListMembersListRequest extends OrganizationRequest {
 
     public UUID getListId() {

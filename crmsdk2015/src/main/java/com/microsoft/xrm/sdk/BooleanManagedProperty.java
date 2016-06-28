@@ -1,8 +1,5 @@
 package com.microsoft.xrm.sdk;
 
-/**
- * Created on 3/26/2015.
- */
 public class BooleanManagedProperty extends ManagedProperty<Boolean> {
 
     public BooleanManagedProperty() {
@@ -18,11 +15,7 @@ public class BooleanManagedProperty extends ManagedProperty<Boolean> {
         this.setValue(value);
     }
 
-    protected String toValueXml()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(super.ToValueXml());
-        stringBuilder.append(Utils.objectToXml(this.getValue(), "a:Value", true));
-        return stringBuilder.toString();
+    protected String toValueXml() {
+        return super.ToValueXml() + Utils.objectToXml(this.getValue(), "a:Value", true);
     }
 }

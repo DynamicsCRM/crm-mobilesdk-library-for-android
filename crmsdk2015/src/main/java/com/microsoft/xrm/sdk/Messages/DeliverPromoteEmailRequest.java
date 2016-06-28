@@ -9,9 +9,6 @@ import com.microsoft.xrm.sdk.OrganizationRequest;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * Created on 3/27/2015.
- */
 public final class DeliverPromoteEmailRequest extends OrganizationRequest {
 
     public DeliverPromoteEmailRequest() {

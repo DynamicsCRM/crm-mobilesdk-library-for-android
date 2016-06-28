@@ -1,9 +1,7 @@
 package com.microsoft.xrm.sdk;
 
-/**
- * Created on 3/6/2015.
- */
-class V5 {
+public class V5 {
+
     public static final String Prefix = "http://schemas.microsoft.com/xrm/2011/";
     public static final String Contracts = "http://schemas.microsoft.com/xrm/2011/Contracts";
     public static final String Metadata = "http://schemas.microsoft.com/xrm/2011/Metadata";

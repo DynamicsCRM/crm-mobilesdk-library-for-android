@@ -2,9 +2,6 @@ package com.microsoft.xrm.sdk;
 
 import android.support.annotation.Nullable;
 
-/**
- * Created on 3/30/2015.
- */
 public enum PrivilegeDepth {
     Basic(0),
     Local(1),

@@ -1,5 +1,7 @@
 package com.microsoft.xrm.sdk;
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.internal.LinkedTreeMap;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -9,15 +11,12 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.UUID;
 
-/**
- * Created on 3/2/2015.
- */
 public class Entity {
 
     private UUID Id;
     private String LogicalName;
     private EntityState EntityState;
-    boolean isReadOnly;
+    private boolean isReadOnly;
     private AttributeCollection Attributes;
     private FormattedValueCollection FormattedValues;
     private RelatedEntityCollection RelatedEntities;
@@ -83,6 +82,10 @@ public class Entity {
 
     public Object get(String attributeName) {
         return this.Attributes.get(attributeName);
+    }
+
+    public void put(String attributeName, Object value) {
+        this.Attributes.put(attributeName, value);
     }
 
     public AttributeCollection getAttributes() {
@@ -219,19 +222,22 @@ public class Entity {
     }
 
     String toValueXml() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Utils.encodeXML(this.Attributes.ToXml()));
-        stringBuilder.append("<a:EntityState i:nil='true' />");
-        stringBuilder.append(Utils.encodeXML(this.FormattedValues.toXml()));
-        stringBuilder.append("<a:Id>");
-        stringBuilder.append((this.Id == null || this.Id == new UUID(0L, 0L)) ?
-                "00000000-0000-0000-0000-000000000000" : Id.toString());
-        stringBuilder.append("</a:Id>");
-        stringBuilder.append("<a:LogicalName>" + this.LogicalName + "</a:LogicalName>");
-        stringBuilder.append(Utils.encodeXML(this.RelatedEntities.toXml()));
-        return stringBuilder.toString();
+        String id = (this.Id == null || this.Id == new UUID(0L, 0L)) ?
+                "00000000-0000-0000-0000-000000000000" : Id.toString();
+
+        return this.Attributes.ToXml() +
+            "<a:EntityState i:nil='true' />" +
+            this.FormattedValues.toXml() +
+            "<a:Id>" +
+                id +
+            "</a:Id>" +
+            "<a:LogicalName>" +
+                this.LogicalName +
+            "</a:LogicalName>" +
+            this.RelatedEntities.toXml();
     }
 
+    @Nullable
     public static Entity loadFromXml(XmlPullParser parser) {
         Entity entity = new Entity();
 

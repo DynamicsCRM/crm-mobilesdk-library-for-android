@@ -2,12 +2,9 @@ package com.microsoft.xrm.sdk.Client;
 
 import java.util.HashMap;
 
-/**
- * Created on 3/12/2015.
- */
 public class QueryOptions {
 
-    private HashMap<String, String> queries = new HashMap<String, String>();
+    private HashMap<String, String> queries = new HashMap<>();
 
     public QueryOptions() {
 

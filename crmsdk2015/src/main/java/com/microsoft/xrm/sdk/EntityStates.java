@@ -1,8 +1,5 @@
 package com.microsoft.xrm.sdk;
 
-/**
- * Created on 3/6/2015.
- */
 enum EntityStates {
     Detached(1),
     Unchanged(2),

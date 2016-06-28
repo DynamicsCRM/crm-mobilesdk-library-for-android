@@ -7,9 +7,6 @@ import com.microsoft.xrm.sdk.OptionSetValue;
 import com.microsoft.xrm.sdk.OrganizationRequest;
 import com.microsoft.xrm.sdk.OrganizationResponse;
 
-/**
- * Created on 3/27/2015.
- */
 public final class WinQuoteRequest extends OrganizationRequest {
 
     public WinQuoteRequest() {

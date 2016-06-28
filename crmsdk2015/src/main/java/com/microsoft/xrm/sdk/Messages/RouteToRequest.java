@@ -7,9 +7,6 @@ import com.microsoft.xrm.sdk.OrganizationRequest;
 
 import java.util.UUID;
 
-/**
- * Created on 3/27/2015.
- */
 public final class RouteToRequest extends OrganizationRequest {
 
     public RouteToRequest() {

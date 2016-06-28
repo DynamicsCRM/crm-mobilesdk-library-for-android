@@ -2,9 +2,6 @@ package com.microsoft.xrm.sdk;
 
 import java.util.UUID;
 
-/**
- * Created on 3/5/2015.
- */
 public class OrganizationRequest {
 
     private DataMapCollection<String, Object> Parameters;
@@ -33,18 +30,19 @@ public class OrganizationRequest {
         return "";
     }
 
-    public String getSoapBody()
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<d:request>");
-        sb.append((this.Parameters.size() == 0) ? "<a:Parameters />" :
+    public String getSoapBody() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<d:request>");
+        stringBuilder.append((this.Parameters.size() == 0) ? "<a:Parameters />" :
                 "<a:Parameters>" + GetParameters() + "</a:Parameters>");
-        sb.append((this.RequestId == null || this.RequestId == new UUID(0L, 0L)) ?
+        stringBuilder.append((this.RequestId == null || this.RequestId == new UUID(0L, 0L)) ?
                 "<a:RequestId i:nil='true' />":
         "<a:RequestId>" + RequestId.toString() + "</a:RequestId>");
-        sb.append("<a:RequestName>" + Utils.encodeXML(RequestName) + "</a:RequestName>");
-        sb.append("</d:request>");
-        return sb.toString();
+            stringBuilder.append("<a:RequestName>");
+                stringBuilder.append(Utils.encodeXML(RequestName));
+            stringBuilder.append("</a:RequestName>");
+        stringBuilder.append("</d:request>");
+        return stringBuilder.toString();
     }
 
     String GetParameters()
@@ -57,8 +55,10 @@ public class OrganizationRequest {
             if (parameter == null)
                 continue;
             stringBuilder.append("<a:KeyValuePairOfstringanyType>");
-            stringBuilder.append("<b:key>" + Utils.encodeXML(key) + "</b:key>");
-            stringBuilder.append(Utils.objectToXml(parameter, "b:value", null));
+                stringBuilder.append("<b:key>");
+                    stringBuilder.append(Utils.encodeXML(key));
+                stringBuilder.append("</b:key>");
+                stringBuilder.append(Utils.objectToXml(parameter, "b:value", null));
             stringBuilder.append("</a:KeyValuePairOfstringanyType>");
         }
         return stringBuilder.toString();
@@ -82,7 +82,7 @@ public class OrganizationRequest {
 
     public DataMapCollection<String, Object> getParameters() {
         if (this.Parameters == null) {
-            this.Parameters = new DataMapCollection<String, Object>();
+            this.Parameters = new DataMapCollection<>();
         }
 
         return this.Parameters;

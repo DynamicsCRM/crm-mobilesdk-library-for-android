@@ -2,9 +2,6 @@ package com.microsoft.xrm.sdk.Query;
 
 import com.microsoft.xrm.sdk.Utils;
 
-/**
- * Created on 3/6/2015.
- */
 public final class FetchExpression extends QueryBase {
     private String query;
 
@@ -23,4 +20,5 @@ public final class FetchExpression extends QueryBase {
     public String toValueXml() {
         return Utils.objectToXml(query, "a:Query", true);
     }
+
 }

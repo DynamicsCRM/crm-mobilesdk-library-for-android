@@ -1,20 +1,13 @@
 package com.microsoft.xrm.sdk;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.microsoft.xrm.sdk.Client.QueryOptions;
-import com.microsoft.xrm.sdk.Callback;
 
-import java.io.InvalidClassException;
 import java.util.UUID;
 
-import retrofit.client.Response;
-import retrofit.mime.TypedString;
+import rx.Observable;
 
-/**
- * Created on 3/30/2015.
- */
 public interface RestOrganizationService {
 
     /**
@@ -22,54 +15,34 @@ public interface RestOrganizationService {
      * @param entity An entity instance that contains the properties to set in the newly created record.
      *               must be a subclass of entity to use this method.
      */
-    void Create(Entity entity, Callback<UUID> callback) throws InvalidClassException;
+    Observable<UUID> Create(Entity entity);
 
-    void Create(Entity relatedTo, Entity create, String relationshipName, Callback<UUID> callback) throws InvalidClassException;
+    void Create(Entity entity, Callback<UUID> callback);
 
-    /**
-     *
-     * @param relatedToSchemaName Schema Name of the entity that you are relating the new entity to
-     * @param relatedToId Guid/UUID of the entity that you are relating the new entity to
-     * @param create Entity you will be creating
-     * @param relationshipName Schema Relationship Name
-     * @param callback The callback object that will be fired on response from CRM
-     */
-    void Create(String relatedToSchemaName, UUID relatedToId, Entity create, String relationshipName, Callback<UUID> callback);
+    Observable<UUID> Create(Entity relatedTo, Entity create, String relationshipName);
 
-    /**
-     * Deletes a record.
-     * @param entitySchemaName The logical name of the entity specified in the entityId parameter.
-     * @param id The ID of the record of the record to delete.
-     */
-    void Delete(String entitySchemaName, UUID id, @Nullable Callback<?> callback);
+    void Create(Entity relatedTo, Entity create, String relationshipName, Callback<UUID> callback);
 
-    /**
-     *
-     * @param entitySchemaName
-     * @param id
-     * @param queryOptions
-     * @param callback
-     */
-//    void Retrieve(String entitySchemaName, UUID id, @NonNull QueryOptions queryOptions,
-//                  Callback<Entity> callback);
+    Observable<UUID> Create(String relatedToSchemaName, UUID relatedToId, Entity create, String relationshipName);
 
-    /**
-     *
-     * @param entitySchemaName
-     * @param id
-     * @param relationshipName
-     * @param queryOptions
-     * @param callback
-     */
-    void RetrieveMultiple(String entitySchemaName, UUID id, String relationshipName,
-                                 @NonNull QueryOptions queryOptions, Callback<EntityCollection> callback);
+    void Create(String relatedToSchemaName, UUID relatedToId, Entity create, String relationshipName,
+                          Callback<UUID> callback);
 
-    /**
-     *
-     * @param entitySchemaName
-     * @param query
-     * @param callback
-     */
+    Observable<?> Delete(String entitySchemaName, UUID id);
+
+    void Delete(String entitySchemaName, UUID id, Callback<?> callback);
+
+//    Observable<Entity> Retrieve(String entitySchemaName, UUID id, @NonNull QueryOptions queryOptions);
+//
+//    void Retrieve(String entitySchemaName, UUID id, @NonNull QueryOptions queryOptions, Callback<Entity> callback);
+
+    Observable<EntityCollection> RetrieveMultiple(String entitySchemaName, UUID id, String relationshipName, @NonNull QueryOptions queryOptions);
+
+    void RetrieveMultiple(String entitySchemaName, UUID id, String relationshipName, @NonNull QueryOptions queryOptions,
+                                                Callback<EntityCollection> callback);
+
+    Observable<EntityCollection> RetrieveMultiple(String entitySchemaName, QueryOptions query);
+
     void RetrieveMultiple(String entitySchemaName, QueryOptions query, Callback<EntityCollection> callback);
 
     /**
@@ -77,5 +50,7 @@ public interface RestOrganizationService {
      * @param entity An entity instance that has one or more properties set to be updated in the record.
      *               must be a subclass of entity to use this method.
      */
-    void Update(Entity entity, @Nullable Callback<?> callback) throws InvalidClassException;
+    Observable<?> Update(Entity entity);
+
+    void Update(Entity entity, Callback<?> callback);
 }

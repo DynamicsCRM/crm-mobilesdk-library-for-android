@@ -4,9 +4,6 @@
 //
 //import com.microsoft.xrm.sdk.OrganizationRequest;
 //
-///**
-// * Created on 3/6/2015.
-// */
 //public final class CreateEntityRequest extends OrganizationRequest {
 //
 //    public CreateEntityRequest() {

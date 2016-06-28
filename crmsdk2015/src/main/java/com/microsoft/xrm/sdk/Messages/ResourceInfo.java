@@ -2,9 +2,6 @@ package com.microsoft.xrm.sdk.Messages;
 
 import java.util.UUID;
 
-/**
- * Created on 3/31/2015.
- */
 public final class ResourceInfo {
 
     private String displayName;

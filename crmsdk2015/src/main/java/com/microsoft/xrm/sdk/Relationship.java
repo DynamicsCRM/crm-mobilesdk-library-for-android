@@ -1,8 +1,5 @@
 package com.microsoft.xrm.sdk;
 
-/**
- * Created on 3/6/2015.
- */
 public class Relationship {
 
     private EntityRole PrimaryEntityRole;
@@ -32,11 +29,8 @@ public class Relationship {
         this.PrimaryEntityRole = value;
     }
 
-    String toValueXml()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Utils.objectToXml(PrimaryEntityRole, "a:PrimaryEntityRole", true));
-        stringBuilder.append(Utils.objectToXml(SchemaName, "a:SchemaName", true));
-        return stringBuilder.toString();
+    String toValueXml() {
+        return Utils.objectToXml(PrimaryEntityRole, "a:PrimaryEntityRole", true) +
+            Utils.objectToXml(SchemaName, "a:SchemaName", true);
     }
 }

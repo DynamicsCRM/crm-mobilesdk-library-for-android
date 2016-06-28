@@ -5,9 +5,6 @@ import android.support.annotation.Nullable;
 import com.microsoft.xrm.sdk.OrganizationRequest;
 import com.microsoft.xrm.sdk.Query.QueryBase;
 
-/**
- * Created on 3/24/2015.
- */
 public final class RetrieveMultipleRequest extends OrganizationRequest {
 
     public RetrieveMultipleRequest() {

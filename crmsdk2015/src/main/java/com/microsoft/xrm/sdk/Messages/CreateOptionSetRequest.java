@@ -5,9 +5,6 @@ import android.support.annotation.Nullable;
 import com.microsoft.xrm.sdk.Metadata.OptionSetMetadataBase;
 import com.microsoft.xrm.sdk.OrganizationRequest;
 
-/**
- * Created on 3/24/2015.
- */
 public final class CreateOptionSetRequest extends OrganizationRequest {
 
     public CreateOptionSetRequest() {

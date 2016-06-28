@@ -2,9 +2,6 @@ package com.microsoft.xrm.sdk.Metadata;
 
 import com.microsoft.xrm.sdk.BooleanManagedProperty;
 
-/**
- * Created on 3/26/2015.
- */
 public abstract class RelationshipMetadataBase extends MetadataBase {
 
     private Boolean isCustomRelationship;

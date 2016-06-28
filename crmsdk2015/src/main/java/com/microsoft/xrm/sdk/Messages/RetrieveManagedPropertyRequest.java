@@ -6,9 +6,6 @@
 //
 //import java.util.UUID;
 //
-///**
-// * Created on 3/24/2015.
-// */
 //public final class RetrieveManagedPropertyRequest extends OrganizationRequest {
 //
 //    public RetrieveManagedPropertyRequest() {

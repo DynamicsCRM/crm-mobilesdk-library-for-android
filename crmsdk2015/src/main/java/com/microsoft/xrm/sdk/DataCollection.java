@@ -8,12 +8,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created on 3/6/2015.
- */
 public class DataCollection<T> implements Collection<T> {
 
-    private ArrayList<T> dataCollection = new ArrayList<T>();
+    private ArrayList<T> dataCollection = new ArrayList<>();
 
     DataCollection() {
 
@@ -24,11 +21,7 @@ public class DataCollection<T> implements Collection<T> {
     }
 
     public boolean addRange(T[] items) {
-        if (items == null) {
-            return false;
-        }
-
-        return dataCollection.addAll(Arrays.asList(items));
+        return items != null && dataCollection.addAll(Arrays.asList(items));
     }
 
     @Override
@@ -37,7 +30,7 @@ public class DataCollection<T> implements Collection<T> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends T> collection) {
+    public boolean addAll(@NonNull Collection<? extends T> collection) {
         return dataCollection.addAll(collection);
     }
 
@@ -52,7 +45,7 @@ public class DataCollection<T> implements Collection<T> {
     }
 
     @Override
-    public boolean containsAll(Collection<?> collection) {
+    public boolean containsAll(@NonNull Collection<?> collection) {
         return dataCollection.containsAll(collection);
     }
 
@@ -73,12 +66,12 @@ public class DataCollection<T> implements Collection<T> {
     }
 
     @Override
-    public boolean removeAll(Collection<?> collection) {
+    public boolean removeAll(@NonNull Collection<?> collection) {
         return dataCollection.removeAll(collection);
     }
 
     @Override
-    public boolean retainAll(Collection<?> collection) {
+    public boolean retainAll(@NonNull Collection<?> collection) {
         return dataCollection.retainAll(collection);
     }
 
@@ -95,7 +88,7 @@ public class DataCollection<T> implements Collection<T> {
 
     @NonNull
     @Override
-    public <T1> T1[] toArray(T1[] array) {
+    public <T1> T1[] toArray(@NonNull T1[] array) {
         return dataCollection.toArray(array);
     }
 
@@ -105,7 +98,7 @@ public class DataCollection<T> implements Collection<T> {
 
     public <T> Iterable<T> toEntities(Class<?> T) {
 
-        return new ArrayList<T>();
+        return new ArrayList<>();
     }
 }
 

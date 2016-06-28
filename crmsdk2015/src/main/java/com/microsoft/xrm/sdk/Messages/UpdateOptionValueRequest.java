@@ -5,9 +5,6 @@
 //import com.microsoft.xrm.sdk.Label;
 //import com.microsoft.xrm.sdk.OrganizationRequest;
 //
-///**
-// * Created on 3/24/2015.
-// */
 //public final class UpdateOptionValueRequest extends OrganizationRequest {
 //
 //    public UpdateOptionValueRequest() {

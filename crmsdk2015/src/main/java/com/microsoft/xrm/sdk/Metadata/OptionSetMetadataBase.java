@@ -3,9 +3,6 @@ package com.microsoft.xrm.sdk.Metadata;
 import com.microsoft.xrm.sdk.BooleanManagedProperty;
 import com.microsoft.xrm.sdk.Label;
 
-/**
- * Created on 3/26/2015.
- */
 public abstract class OptionSetMetadataBase extends MetadataBase {
 
     private Label description;
