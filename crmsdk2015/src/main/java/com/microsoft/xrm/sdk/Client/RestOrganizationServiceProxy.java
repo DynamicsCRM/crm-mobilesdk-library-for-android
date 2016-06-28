@@ -6,6 +6,7 @@ import android.support.v4.util.ArrayMap;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
+import com.microsoft.xrm.sdk.Callback;
 import com.microsoft.xrm.sdk.Entity;
 import com.microsoft.xrm.sdk.EntityCollection;
 import com.microsoft.xrm.sdk.RestOrganizationService;
@@ -27,6 +28,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class RestOrganizationServiceProxy extends ServiceProxy implements RestOrganizationService {
 
@@ -90,76 +93,124 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
     }
 
     @Override
-    public Observable Create(@NonNull Entity entity) {
-        try {
-            validateEntitySuperclass(entity);
-            String body = gson.toJson(Utils.getSchemaAttributes(entity));
+    public Observable<UUID> Create(@NonNull Entity entity) {
+        return Observable.defer(() -> {
+            try {
+                validateEntitySuperclass(entity);
+                String body = gson.toJson(Utils.getSchemaAttributes(entity));
 
-            Response response = odataService.oDataPost(entity.getClass().getSimpleName(), body).execute();
-            return Observable.just(create(response));
-        }
-        catch(Exception ex) {
-            return Observable.error(ex);
-        }
+                Response response = odataService.oDataPost(entity.getClass().getSimpleName(), body).execute();
+                return Observable.just(create(response));
+            }
+            catch(Exception ex) {
+                return Observable.error(ex);
+            }
+        });
+    }
+
+    @Override
+    public void Create(@NonNull Entity entity, Callback<UUID> callback) {
+        Create(entity)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.newThread())
+            .doOnNext(callback::success)
+            .doOnError(callback::failure)
+            .subscribe();
     }
 
     @Override
     public Observable<UUID> Create(@NonNull Entity relatedTo, @NonNull Entity entity, @NonNull String relationshipName) {
-        try {
-            validateEntitySuperclass(relatedTo);
+        return Observable.defer(() -> {
+            try {
+                validateEntitySuperclass(relatedTo);
 
-            String body;
-            if (entity.getClass().getSuperclass() != Entity.class) {
-                body = gson.toJson(entity.getAttributes());
-            }
-            else {
-                body = gson.toJson(Utils.getSchemaAttributes(entity));
-            }
+                String body;
+                if (entity.getClass().getSuperclass() != Entity.class) {
+                    body = gson.toJson(entity.getAttributes());
+                }
+                else {
+                    body = gson.toJson(Utils.getSchemaAttributes(entity));
+                }
 
-            Response response = odataService
-                    .oDataPost(relatedTo.getClass().getSimpleName(), relatedTo.getId(), relationshipName, body)
-                    .execute();
-            return Observable.just(create(response));
-        }
-        catch(Exception ex) {
-            return Observable.error(ex);
-        }
+                Response response = odataService
+                        .oDataPost(relatedTo.getClass().getSimpleName(), relatedTo.getId(), relationshipName, body)
+                        .execute();
+                return Observable.just(create(response));
+            }
+            catch(Exception ex) {
+                return Observable.error(ex);
+            }
+        });
+    }
+
+    @Override
+    public void Create(Entity relatedTo, Entity create, String relationshipName, Callback<UUID> callback) {
+        Create(relatedTo, create, relationshipName)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.newThread())
+            .doOnNext(callback::success)
+            .doOnError(callback::failure)
+            .subscribe();
     }
 
     @Override
     public Observable<UUID> Create(@NonNull String relatedToSchemaName, @NonNull UUID relatedToId, @NonNull Entity create, @NonNull String relationshipName) {
-        try {
-            String body;
-            if (create.getClass().getSuperclass() != Entity.class) {
-                body = gson.toJson(create.getAttributes());
-            }
-            else {
-                body = gson.toJson(Utils.getSchemaAttributes(create));
-            }
+        return Observable.defer(() -> {
+            try {
+                String body;
+                if (create.getClass().getSuperclass() != Entity.class) {
+                    body = gson.toJson(create.getAttributes());
+                }
+                else {
+                    body = gson.toJson(Utils.getSchemaAttributes(create));
+                }
 
-            Response response = odataService
-                    .oDataPost(relatedToSchemaName, relatedToId, relationshipName, body)
-                    .execute();
-            return Observable.just(create(response));
-        }
-        catch(Exception ex) {
-            return Observable.error(ex);
-        }
+                Response response = odataService
+                        .oDataPost(relatedToSchemaName, relatedToId, relationshipName, body)
+                        .execute();
+                return Observable.just(create(response));
+            }
+            catch(Exception ex) {
+                return Observable.error(ex);
+            }
+        });
     }
 
     @Override
-    public Observable Delete(@NonNull String entitySchemaName, @NonNull UUID id) {
-        try {
-            Response response  = odataService.oDataDelete(entitySchemaName, id).execute();
-            if (!response.isSuccessful() || response.body() == null) {
-                throw new Exception(response.errorBody().string());
-            }
+    public void Create(String relatedToSchemaName, UUID relatedToId, Entity create, String relationshipName, Callback<UUID> callback) {
+        Create(relatedToSchemaName, relatedToId, create, relationshipName)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.newThread())
+            .doOnNext(callback::success)
+            .doOnError(callback::failure)
+            .subscribe();
+    }
 
-            return Observable.just(response.body());
-        }
-        catch(Exception ex) {
-            return Observable.error(ex);
-        }
+    @Override
+    public Observable<?> Delete(@NonNull String entitySchemaName, @NonNull UUID id) {
+        return Observable.defer(() -> {
+            try {
+                Response response  = odataService.oDataDelete(entitySchemaName, id).execute();
+                if (!response.isSuccessful() || response.body() == null) {
+                    throw new Exception(response.errorBody().string());
+                }
+
+                return Observable.just(response.body());
+            }
+            catch(Exception ex) {
+                return Observable.error(ex);
+            }
+        });
+    }
+
+    @Override
+    public void Delete(String entitySchemaName, UUID id, Callback<?> callback) {
+        Delete(entitySchemaName, id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.newThread())
+            .doOnNext(callback::success)
+            .doOnError(callback::failure)
+            .subscribe();
     }
 
     private EntityCollection retrieveMultiple(Response response) throws Exception {
@@ -194,6 +245,26 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
     }
 
     @Override
+    public void RetrieveMultiple(String entitySchemaName, UUID id, String relationshipName, @NonNull QueryOptions queryOptions, Callback<EntityCollection> callback) {
+        RetrieveMultiple(entitySchemaName, id, relationshipName, queryOptions)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.newThread())
+            .doOnNext(callback::success)
+            .doOnError(callback::failure)
+            .subscribe();
+    }
+
+    @Override
+    public void RetrieveMultiple(String entitySchemaName, QueryOptions query, Callback<EntityCollection> callback) {
+        RetrieveMultiple(entitySchemaName, query)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.newThread())
+            .doOnNext(callback::success)
+            .doOnError(callback::failure)
+            .subscribe();
+    }
+
+    @Override
     public Observable<EntityCollection> RetrieveMultiple(@NonNull String entitySchemaName, @NonNull QueryOptions query) {
         return Observable.defer(() -> {
             try {
@@ -207,22 +278,34 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
     }
 
     @Override
-    public Observable Update(@NonNull Entity entity) {
-        try {
-            validateEntitySuperclass(entity);
+    public Observable<?> Update(@NonNull Entity entity) {
+        return Observable.defer(() -> {
+            try {
+                validateEntitySuperclass(entity);
 
-            Response response = odataService
-                    .oDataPost(entity.getClass().getSimpleName(), entity.getId(), gson.toJson(entity))
-                    .execute();
-            if (!response.isSuccessful() || response.body() == null) {
-                throw new Exception(response.errorBody().string());
+                Response response = odataService
+                        .oDataPost(entity.getClass().getSimpleName(), entity.getId(), gson.toJson(entity))
+                        .execute();
+                if (!response.isSuccessful() || response.body() == null) {
+                    throw new Exception(response.errorBody().string());
+                }
+
+                return Observable.just(response.body());
             }
+            catch(Exception ex) {
+                return Observable.error(ex);
+            }
+        });
+    }
 
-            return Observable.just(response.body());
-        }
-        catch(Exception ex) {
-            return Observable.error(ex);
-        }
+    @Override
+    public void Update(Entity entity, Callback<?> callback) {
+        Update(entity)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.newThread())
+            .doOnNext(callback::success)
+            .doOnError(callback::failure)
+            .subscribe();
     }
 
     @Nullable
