@@ -225,16 +225,16 @@ public class Entity {
         String id = (this.Id == null || this.Id == new UUID(0L, 0L)) ?
                 "00000000-0000-0000-0000-000000000000" : Id.toString();
 
-        return Utils.encodeXML(this.Attributes.ToXml()) +
+        return Utils.encodeXML(this.Attributes.ToXml() +
             "<a:EntityState i:nil='true' />" +
-            Utils.encodeXML(this.FormattedValues.toXml()) +
+            this.FormattedValues.toXml() +
             "<a:Id>" +
                 id +
             "</a:Id>" +
             "<a:LogicalName>" +
                 this.LogicalName +
             "</a:LogicalName>" +
-            Utils.encodeXML(this.RelatedEntities.toXml());
+            this.RelatedEntities.toXml());
     }
 
     @Nullable

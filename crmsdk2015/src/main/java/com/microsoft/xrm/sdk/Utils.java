@@ -31,6 +31,15 @@ public class Utils {
             .replace("'", "&apos;");
     }
 
+    public static String decodeXML(String data) {
+        return data
+            .replace("&amp;", "&")
+            .replace("&lt;", "<")
+            .replace("&gt;", ">")
+            .replace("&quot;", "\"")
+            .replace("&apos;", "'");
+    }
+
     public static void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
         if (parser.getEventType() != XmlPullParser.START_TAG) {
             throw new IllegalStateException();
