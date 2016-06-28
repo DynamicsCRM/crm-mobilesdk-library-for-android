@@ -118,7 +118,7 @@ public class Utils {
 
             switch(value.getClass().getSimpleName()) {
                 case "Date":
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'.000Z'");
                     value = format.format((Date)value);
                     break;
                 case "EntityCollection":
@@ -423,7 +423,7 @@ public class Utils {
                     break;
                 case "Date":
                     type = "c:dateTime";
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-DD'T'HH:mm:ss");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'.000Z'");
                     value = simpleDateFormat.format((Date)item);
                     break;
                 case "Boolean":
