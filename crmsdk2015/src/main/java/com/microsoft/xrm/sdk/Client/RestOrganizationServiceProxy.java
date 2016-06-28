@@ -7,7 +7,6 @@ import android.support.v4.util.ArrayMap;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.microsoft.xrm.sdk.Callback;
-import com.microsoft.xrm.sdk.Client.Converters.StringConverterFactory;
 import com.microsoft.xrm.sdk.Entity;
 import com.microsoft.xrm.sdk.EntityCollection;
 import com.microsoft.xrm.sdk.RestOrganizationService;
@@ -41,29 +40,29 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
 
         @Headers({ "Content-Type: application/json;odata=verbose" })
         @POST("/XRMServices/2011/OrganizationData.svc/{schemaName}Set")
-        Call<String> oDataPost(@Path("schemaName") String schemaName, @Body String body);
+        Call<LinkedTreeMap> oDataPost(@Path("schemaName") String schemaName, @Body String body);
 
         @Headers({
                 "Content-Type: application/json;odata=verbose",
                 "X-HTTP-Method: MERGE"
         })
         @POST("/XRMServices/2011/OrganizationData.svc/{schemaName}Set(guid'{guid}')")
-        Call<String> oDataPost(@Path("schemaName") String schemaName, @Path("guid") UUID uid, @Body String body);
+        Call<LinkedTreeMap> oDataPost(@Path("schemaName") String schemaName, @Path("guid") UUID uid, @Body String body);
 
         @Headers({ "Content-Type: application/json;odata=verbose" })
         @POST("/XRMServices/2011/OrganizationData.svc/{schemaName}Set(guid'{guid}')/{relationship}")
-        Call<String> oDataPost(@Path("schemaName") String schemaName, @Path("guid") UUID uid,
+        Call<LinkedTreeMap> oDataPost(@Path("schemaName") String schemaName, @Path("guid") UUID uid,
                        @Path("relationship") String relationshipName, @Body String body);
 
         @GET("/XRMServices/2011/OrganizationData.svc/{schemaName}Set(guid'{guid}')/{relationship}")
-        Call<String> oDataGet(@Path("schemaName") String schemaName, @Path("guid") UUID uid, @Path("relationship") String relationship,
+        Call<LinkedTreeMap> oDataGet(@Path("schemaName") String schemaName, @Path("guid") UUID uid, @Path("relationship") String relationship,
                       @QueryMap Map<String, String> queries);
 
         @GET("/XRMServices/2011/OrganizationData.svc/{schemaName}Set")
-        Call<String> oDataGet(@Path("schemaName") String schemaName, @QueryMap Map<String, String> queries);
+        Call<LinkedTreeMap> oDataGet(@Path("schemaName") String schemaName, @QueryMap Map<String, String> queries);
 
         @DELETE("/XRMServices/2011/OrganizationData.svc/{schemaName}Set(guid'{guid}')")
-        Call<String> oDataDelete(@Path("schemaName") String schemaName, @Path("guid") UUID uid);
+        Call<LinkedTreeMap> oDataDelete(@Path("schemaName") String schemaName, @Path("guid") UUID uid);
 
     }
 
@@ -75,7 +74,7 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
         this.addGlobalHeaders(headers);
         this.gson = new Gson();
 
-        this.odataService = this.buildService(new StringConverterFactory(), oDataService.class);
+        this.odataService = this.buildService(GsonConverterFactory.create(), oDataService.class);
     }
 
     private void validateEntitySuperclass(Entity passed) throws InvalidClassException {
