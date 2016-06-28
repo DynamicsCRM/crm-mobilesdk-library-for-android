@@ -206,10 +206,10 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
     @Override
     public void Delete(String entitySchemaName, UUID id, Callback<?> callback) {
         Delete(entitySchemaName, id)
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.newThread())
-            .doOnNext(callback::success)
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnError(callback::failure)
+            .doOnNext(response -> {})
             .subscribe();
     }
 
@@ -301,10 +301,10 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
     @Override
     public void Update(Entity entity, Callback<?> callback) {
         Update(entity)
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.newThread())
-            .doOnNext(callback::success)
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnError(callback::failure)
+            .doOnNext(response -> {})
             .subscribe();
     }
 

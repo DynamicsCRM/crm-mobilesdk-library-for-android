@@ -15,20 +15,20 @@ public interface RestOrganizationService {
      * @param entity An entity instance that contains the properties to set in the newly created record.
      *               must be a subclass of entity to use this method.
      */
-    Observable Create(Entity entity);
+    Observable<UUID> Create(Entity entity);
 
     void Create(Entity entity, Callback<UUID> callback);
 
-    Observable Create(Entity relatedTo, Entity create, String relationshipName);
+    Observable<UUID> Create(Entity relatedTo, Entity create, String relationshipName);
 
     void Create(Entity relatedTo, Entity create, String relationshipName, Callback<UUID> callback);
 
-    Observable Create(String relatedToSchemaName, UUID relatedToId, Entity create, String relationshipName);
+    Observable<UUID> Create(String relatedToSchemaName, UUID relatedToId, Entity create, String relationshipName);
 
     void Create(String relatedToSchemaName, UUID relatedToId, Entity create, String relationshipName,
                           Callback<UUID> callback);
 
-    Observable Delete(String entitySchemaName, UUID id);
+    Observable<?> Delete(String entitySchemaName, UUID id);
 
     void Delete(String entitySchemaName, UUID id, Callback<?> callback);
 
@@ -50,7 +50,7 @@ public interface RestOrganizationService {
      * @param entity An entity instance that has one or more properties set to be updated in the record.
      *               must be a subclass of entity to use this method.
      */
-    Observable Update(Entity entity);
+    Observable<?> Update(Entity entity);
 
     void Update(Entity entity, Callback<?> callback);
 }
