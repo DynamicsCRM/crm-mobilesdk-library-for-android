@@ -409,7 +409,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
 
         XmlPullParser parser = Xml.newPullParser();
         parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, true);
-        parser.setInput(new ByteArrayInputStream(content.getBytes()), null);
+        parser.setInput(new ByteArrayInputStream(response.getBytes()), null);
         do {
             parser.next();
         } while (parser.getName() == null || !parser.getName().equals("RetrieveMultipleResult"));
