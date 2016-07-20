@@ -412,7 +412,7 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
         parser.setInput(new ByteArrayInputStream(content.getBytes()), null);
         do {
             parser.next();
-        } while (!parser.getName().equals("RetrieveMultipleResult"));
+        } while (parser.getName() == null || !parser.getName().equals("RetrieveMultipleResult"));
         parser.require(XmlPullParser.START_TAG, V5.Services, "RetrieveMultipleResult");
 
         return EntityCollection.loadFromXml(parser);
