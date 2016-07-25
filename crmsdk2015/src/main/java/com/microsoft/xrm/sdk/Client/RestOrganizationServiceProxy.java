@@ -38,18 +38,18 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
 
     interface oDataService {
 
-        @Headers({ "Content-Type: application/json;odata=verbose" })
+        @Headers({ "Content-Type: application/json; charset=utf-8" })
         @POST("/XRMServices/2011/OrganizationData.svc/{schemaName}Set")
         Call<LinkedTreeMap> oDataPost(@Path("schemaName") String schemaName, @Body String body);
 
         @Headers({
-                "Content-Type: application/json;odata=verbose",
+                "Content-Type: application/json; charset=utf-8",
                 "X-HTTP-Method: MERGE"
         })
         @POST("/XRMServices/2011/OrganizationData.svc/{schemaName}Set(guid'{guid}')")
         Call<LinkedTreeMap> oDataPost(@Path("schemaName") String schemaName, @Path("guid") UUID uid, @Body String body);
 
-        @Headers({ "Content-Type: application/json;odata=verbose" })
+        @Headers({ "Content-Type: application/json; charset=utf-8" })
         @POST("/XRMServices/2011/OrganizationData.svc/{schemaName}Set(guid'{guid}')/{relationship}")
         Call<LinkedTreeMap> oDataPost(@Path("schemaName") String schemaName, @Path("guid") UUID uid,
                        @Path("relationship") String relationshipName, @Body String body);
