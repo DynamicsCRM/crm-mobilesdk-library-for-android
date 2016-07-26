@@ -17,7 +17,6 @@ import com.microsoft.xrm.sdk.OrganizationService;
 import com.microsoft.xrm.sdk.Query.QueryBase;
 import com.microsoft.xrm.sdk.Relationship;
 import com.microsoft.xrm.sdk.Utils;
-import com.microsoft.xrm.sdk.V5;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -132,7 +131,6 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
             parser.next();
         } while (!parser.getName().equals("CreateResult"));
 
-        parser.require(XmlPullParser.START_TAG, V5.Services, "CreateResult");
         parser.next();
         if (parser.getEventType() == XmlPullParser.TEXT) {
             return UUID.fromString(parser.getText());
@@ -233,7 +231,6 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
             parser.next();
         }
         while (parser.getEventType() != XmlPullParser.START_TAG || !parser.getName().equals("Results"));
-        parser.require(XmlPullParser.START_TAG, V5.Services, "Results");
 
         orgResponse.storeResult(parser);
         return orgResponse;
@@ -288,7 +285,6 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
         do {
             parser.next();
         } while (!parser.getName().equals("RetrieveResult"));
-        parser.require(XmlPullParser.START_TAG, V5.Services, "RetrieveResult");
 
         return Entity.loadFromXml(parser);
     }
@@ -413,7 +409,6 @@ public class OrganizationServiceProxy extends ServiceProxy implements Organizati
         do {
             parser.next();
         } while (parser.getName() == null || !parser.getName().equals("RetrieveMultipleResult"));
-        parser.require(XmlPullParser.START_TAG, V5.Services, "RetrieveMultipleResult");
 
         return EntityCollection.loadFromXml(parser);
     }
