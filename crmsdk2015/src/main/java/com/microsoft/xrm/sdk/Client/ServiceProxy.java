@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
+//import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -52,7 +52,7 @@ public abstract class ServiceProxy {
     private OkHttpClient buildClient() {
         return new OkHttpClient.Builder()
             .addInterceptor(authHeader)
-            .addNetworkInterceptor(new StethoInterceptor())
+//            .addNetworkInterceptor(new StethoInterceptor())
             .build();
     }
 
