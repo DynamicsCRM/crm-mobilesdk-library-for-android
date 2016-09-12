@@ -37,6 +37,12 @@ repositories {
     mavenCentral()
 }
 
+android {
+    lintOptions {
+        abortOnError false
+    }
+}
+
 dependencies {
     provided 'com.android.support:appcompat-v7:24.1.1'
 //    compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
