@@ -68,3 +68,5 @@ proguard/
 .idea
 .gradle
 build/
+
+*.orig

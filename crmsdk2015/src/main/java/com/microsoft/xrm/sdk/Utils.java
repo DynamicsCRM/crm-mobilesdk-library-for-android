@@ -1,5 +1,6 @@
 package com.microsoft.xrm.sdk;
 
+import android.text.Html;
 import android.util.Base64;
 
 import com.google.gson.Gson;
@@ -103,10 +104,15 @@ public class Utils {
             return calendar.getTime();
         }
         if (value.split("-").length == 5) {
-            return UUID.fromString(value);
+            try {
+                return UUID.fromString(value);
+            }
+            catch(Exception ex) {
+                return Html.fromHtml(value);
+            }
         }
 
-        return value;
+        return Html.fromHtml(value);
     }
 
     public static HashMap<String, Object> getSchemaAttributes(Entity entity) {

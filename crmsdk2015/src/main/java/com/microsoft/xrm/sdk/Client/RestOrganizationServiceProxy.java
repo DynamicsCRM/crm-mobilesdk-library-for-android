@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -38,21 +40,21 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
 
     interface oDataService {
 
-        @Headers({ "Content-Type: application/json;odata=verbose" })
+        @Headers({ "Content-Type: application/json" })
         @POST("/XRMServices/2011/OrganizationData.svc/{schemaName}Set")
-        Call<LinkedTreeMap> oDataPost(@Path("schemaName") String schemaName, @Body String body);
+        Call<LinkedTreeMap> oDataPost(@Path("schemaName") String schemaName, @Body RequestBody body);
 
         @Headers({
-                "Content-Type: application/json;odata=verbose",
+                "Content-Type: application/json",
                 "X-HTTP-Method: MERGE"
         })
         @POST("/XRMServices/2011/OrganizationData.svc/{schemaName}Set(guid'{guid}')")
-        Call<LinkedTreeMap> oDataPost(@Path("schemaName") String schemaName, @Path("guid") UUID uid, @Body String body);
+        Call<LinkedTreeMap> oDataPost(@Path("schemaName") String schemaName, @Path("guid") UUID uid, @Body RequestBody body);
 
-        @Headers({ "Content-Type: application/json;odata=verbose" })
+        @Headers({ "Content-Type: application/json" })
         @POST("/XRMServices/2011/OrganizationData.svc/{schemaName}Set(guid'{guid}')/{relationship}")
         Call<LinkedTreeMap> oDataPost(@Path("schemaName") String schemaName, @Path("guid") UUID uid,
-                       @Path("relationship") String relationshipName, @Body String body);
+                       @Path("relationship") String relationshipName, @Body RequestBody body);
 
         @GET("/XRMServices/2011/OrganizationData.svc/{schemaName}Set(guid'{guid}')/{relationship}")
         Call<LinkedTreeMap> oDataGet(@Path("schemaName") String schemaName, @Path("guid") UUID uid, @Path("relationship") String relationship,
@@ -99,7 +101,8 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
                 validateEntitySuperclass(entity);
                 String body = gson.toJson(Utils.getSchemaAttributes(entity));
 
-                Response response = odataService.oDataPost(entity.getClass().getSimpleName(), body).execute();
+                Response response = odataService.oDataPost(entity.getClass().getSimpleName(),
+                        RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body)).execute();
                 return Observable.just(create(response));
             }
             catch(Exception ex) {
@@ -133,7 +136,7 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
                 }
 
                 Response response = odataService
-                        .oDataPost(relatedTo.getClass().getSimpleName(), relatedTo.getId(), relationshipName, body)
+                        .oDataPost(relatedTo.getClass().getSimpleName(), relatedTo.getId(), relationshipName, RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body))
                         .execute();
                 return Observable.just(create(response));
             }
@@ -166,7 +169,7 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
                 }
 
                 Response response = odataService
-                        .oDataPost(relatedToSchemaName, relatedToId, relationshipName, body)
+                        .oDataPost(relatedToSchemaName, relatedToId, relationshipName, RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body))
                         .execute();
                 return Observable.just(create(response));
             }
@@ -284,7 +287,8 @@ public class RestOrganizationServiceProxy extends ServiceProxy implements RestOr
                 validateEntitySuperclass(entity);
 
                 Response response = odataService
-                        .oDataPost(entity.getClass().getSimpleName(), entity.getId(), gson.toJson(entity))
+                        .oDataPost(entity.getClass().getSimpleName(), entity.getId(),
+                                RequestBody.create(MediaType.parse("application/json; charset=utf-8"), gson.toJson(entity)))
                         .execute();
                 if (!response.isSuccessful() || response.body() == null) {
                     throw new Exception(response.errorBody().string());
