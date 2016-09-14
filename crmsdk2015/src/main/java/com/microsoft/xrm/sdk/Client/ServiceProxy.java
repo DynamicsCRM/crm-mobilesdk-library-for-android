@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 
+//import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -49,17 +51,18 @@ public abstract class ServiceProxy {
     @NonNull
     private OkHttpClient buildClient() {
         return new OkHttpClient.Builder()
-                .addInterceptor(authHeader)
-                .build();
+            .addInterceptor(authHeader)
+//            .addNetworkInterceptor(new StethoInterceptor())
+            .build();
     }
 
     <T> T buildService(Converter.Factory factory, @NonNull Class<T> serviceClass) {
         Retrofit retrofit = new Retrofit.Builder()
-                .client(buildClient())
-                .baseUrl(endpoint)
+            .client(buildClient())
+            .baseUrl(endpoint)
 //                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(factory)
-                .build();
+            .addConverterFactory(factory)
+            .build();
 
         return retrofit.create(serviceClass);
     }
